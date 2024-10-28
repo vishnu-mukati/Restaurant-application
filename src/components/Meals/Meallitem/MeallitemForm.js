@@ -1,18 +1,39 @@
+import React, { useState, useContext } from "react";
 import Input from "../../UI/Input";
 import classes from "./MeallitemForm.module.css";
+import Cartcontext from "../../Store/Cart-context";
 
-const MeallitemForm = () =>{
+const MeallitemForm = (props) =>{
+  const [addItems, setAddItems] = useState("1");
+  const cartCtx = useContext(Cartcontext);
+
+  const AmountChangeHandler = (event) => {
+    setAddItems(event.target.value);
+  };
+  const AddItemHandler = (event) => {
+    event.preventDefault();
+    const amountValue = Number(addItems);
+    
+    const item = {
+      id : props.id,
+      amount : amountValue,
+      dataobj : props.product,
+    }
+    cartCtx.addItem(item);
+
+  };
       return (
-        <form className={classes.form}>
+        <form className={classes.form}  onSubmit={AddItemHandler}>
             <Input label ="Amount" input={{
                 id : 'amount',
+                value: addItems,
                 type : 'number',
                 min : '1',
                 max : '5',
                 step : '1',
-                defaultValue : '1',
+                onChange: AmountChangeHandler,
             }}/>
-            <button >+Add</button>
+            <button type="submit">+Add</button>
         </form>
       );
 }

@@ -3,7 +3,13 @@ import MeallitemForm from "./MeallitemForm";
 
 const Meallitem = (props) => {
     const price = `$${props.price.toFixed(2)}`;
-
+    
+  const dataobj = {
+    id : props.id,
+    name:props.name,
+    description : props.description,
+    price : props.price,
+  }
     return (
         <li className={classes.meal}>
 
@@ -13,7 +19,7 @@ const Meallitem = (props) => {
                 <div className={classes.price}>{price}</div>
             </div>
            <div>
-            <MeallitemForm/>
+            <MeallitemForm id = {props.id} product = {dataobj}/>
            </div>
         </li>
     );
